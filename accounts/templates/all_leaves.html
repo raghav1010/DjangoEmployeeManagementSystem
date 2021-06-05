@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />  
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" >ERM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/all_leaves">Leaves</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Search Section -->
+    <div class="container py-5">
+        
+    </div>
+
+
+    <!-- Employee List -->
+    <div class="container " >
+        {% for leave in leaves %}
+        {% if leave.status == "Wait" %}
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h4 class="card-title" ><a href="/leave_detail/{{leave.id}}">{{leave.name}}</a></h4>
+                <p>
+                    <a >Applied By: <b>{{leave.owner}}</b></a>
+                </p>
+                <p>
+                    <a > Start Date: <b>{{leave.startdate}}</b></a>
+                </p>
+                <p>
+                    <a >End Date: <b>{{leave.enddate}}</b></a>
+                </p>
+                <p>
+                    <a >Status: 
+                        
+                        <b style="color: orange;">
+                            {{leave.status}}
+                        </b>
+                        
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="container " >
+        {% for leave in leaves %}
+        {% if leave.status == "Approved" %}
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h4 class="card-title" ><a href="/leave_detail/{{leave.id}}">{{leave.name}}</a></h4>
+                <p>
+                    <a >Applied By: <b>{{leave.owner}}</b></a>
+                </p>
+                <p>
+                    <a > Start Date: <b>{{leave.startdate}}</b></a>
+                </p>
+                <p>
+                    <a >End Date: <b>{{leave.enddate}}</b></a>
+                </p>
+                <p>
+                    <a >Status: 
+                        
+                        <b style="color: green;">
+                            {{leave.status}}
+                        </b>
+                        
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="container " >
+        {% for leave in leaves %}
+        {% if leave.status == "Declined" %}
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h4 class="card-title" ><a href="/leave_detail/{{leave.id}}">{{leave.name}}</a></h4>
+                <p>
+                    <a >Applied By: <b>{{leave.owner}}</b></a>
+                </p>
+                <p>
+                    <a > Start Date: <b>{{leave.startdate}}</b></a>
+                </p>
+                <p>
+                    <a >End Date: <b>{{leave.enddate}}</b></a>
+                </p>
+                <p>
+                    <a >Status: 
+                        
+                        <b style="color: red;">
+                            {{leave.status}}
+                        </b>
+                        
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav class="my-3 container">
+        <ul class="pagination">
+            {% if leaves.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{leaves.previous_page_number}}">Previous</a></li>
+          {% endif %}
+          {% for i in leaves.paginator.page_range %}
+          {% if quests.number == i %}
+          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+          {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if leaves.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{leaves.next_page_number}}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+</body>
+</html>
